@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add React in One Minute</title>
+    
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Don't use this in production -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  </head>
+    <body>
+
+      <!-- Step 1 -->
+      <div><h1>1. Component</h1></div>
+      <!-- Step 1.1 = ReactDOM.render() -->
+      <div id="myApp" >
+      </div>
+
+      <script type="text/babel" >
+        const myApp = document.getElementById('myApp');
+        ReactDOM.render(<h2>1. Hello React.js</h2>,myApp)
+      </script>
+
+      <!-- Step 1.1 = Create React.Component -->
+      <div id="myApp2"></div>
+      <div id="myApp3"></div>
+      <div id="myApp4"></div>
+      <div id="myApp5"></div>
+
+      <script type="text/babel">
+
+        // 1. Class Conponent
+        class MyCard extends React.Component{
+          render(){
+            return (
+                <div className="card-conent" ><h2>2. Hello Class Component</h2></div>
+            )
+          }
+        }
+
+        const myApp2 = document.getElementById('myApp2');
+        ReactDOM.render(<MyCard/>,myApp2)
+
+        // 2. Function Component
+        const FnCom = function (){
+          return (
+            <h2>3.  Hello Function Component </h2>
+          )
+        }
+
+        const myApp3 = document.getElementById('myApp3');
+        ReactDOM.render(<FnCom/>,myApp3)
+        
+        // 3. Arrow Function Component
+        const Fncom_2 = () => <h2>4. Hellow Arrow Function Component </h2>
+        const myApp4 = document.getElementById('myApp4');
+        ReactDOM.render(<Fncom_2/>,myApp4)
+
+        // 4. gether Component รวม Component
+        const FnCom_21 = function (){
+          return (
+            <h2>5.1 Sub Component </h2>
+          )
+        }
+
+        class All_MyComponent extends React.Component{
+          render(){
+            return (
+                <div className="card">
+                  <div className="card-conent" ><h2>5. Main Component</h2></div>
+                  <FnCom_21/>
+                </div>
+            )
+          }
+        }
+        const myApp5 = document.getElementById('myApp5');
+        ReactDOM.render(<All_MyComponent/>,myApp5)
+      </script>
+
+
+      <div>
+        <h1>2. Props</h1>
+        <div id="myApp6"></div>
+      </div>
+      
+      <script type="text/babel" >
+
+        class Class_Component_1 extends React.Component{
+          render(){
+            return (
+                <div className="test">
+                  <FnCom_3 message="1.รับส่งค่าระหว่าง Component to Component"/>
+                </div>
+            )
+          }
+        }
+
+        const FnCom_3 = function (props){
+          const message = props.message;
+          return (
+           // can use React.Fragemnt แทน <div>
+            <React.Fragment>
+              <h2>{message}</h2>
+            </React.Fragment>
+          )
+        }
+        const myApp6 = document.getElementById('myApp6');
+        ReactDOM.render(<Class_Component_1/>,myApp6)
+
+      </script>
+
+
+      <div>
+        <h1>3. State</h1>
+        <p>State ค่าตัวแปลใช้ภายใน Component</p>
+        <p>ไม่สามารถใช้รวมกันระหว่าง Component ได้</p>
+        <p>Update State เป็น Asynchronous จะไม่รอให้เสร็จทำงานเลย</p>
+        <p>เมื่อ Update State จะ render ใหม่ </p>
+        <div id="myApp7" ></div>
+        <div id="myApp8" ></div>
+      </div>
+      
+      <script type="text/babel" >
+      
+        class Com_state extends React.Component {
+          constructor(props){
+            super(props);
+
+            this.state = {
+              name: 'Hello State',
+              counter: 0
+            }
+
+            // bind เพื่อให้ this ของ component นี้ใช้ใน handleClick ได้
+            this.handleClick = this.handleClick.bind(this);
+          }
+
+          handleClick(e){
+            console.log(this)
+            this.setState({counter: this.state.counter + 1})
+            console.log(this.state.counter)
+          }
+          render(){
+            return(
+              <div>
+                <h2>1. This state is {this.state.name} </h2>
+                <h2>2. Class Component Counter <button onClick={this.handleClick} > Click me</button> This state counter =  {this.state.counter} </h2>
+              </div>
+            )
+          }
+        }
+        const myApp7 = document.getElementById('myApp7');
+        ReactDOM.render(<Com_state/>,myApp7)
+
+
+        const FnCom_counter = function (){
+          
+          const handleClick = function(e){
+            console.log('clicked!!')
+          }
+
+          return (
+            <React.Fragment>
+            <h2>3. Funciton Component Counter   <button onClick={handleClick} >Click me</button></h2>
+            </React.Fragment>
+          )
+        }
+        const myApp8 = document.getElementById('myApp8');
+        ReactDOM.render(<FnCom_counter/>,myApp8)
+
+
+      </script>
+
+    </body>
+</html>
